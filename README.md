@@ -241,3 +241,53 @@ JVM的实现一般不采用这种方式
 老年代：标记-清除-压缩算法 ---> 混合实现，**调优就可以调 标记清除 多少次之后，才进行一次压缩**
 
 =====》所以GC也称为  ==分代收集算法 #F44336==
+
+## 9. 字符串常量池
+
+**字符串常量池在堆，运行时常量池在方法区**（元空间）
+
+Q：String s1 = new String("abc");这句话创建了几个字符串对象？
+
+A：1 or 2个。
+如果池中已存在字符串常量“abc”，则只会在堆空间创建一个字符串常量“abc”。如果池中没有字符串常量“abc”，那么它将**首先在池中创建**，然后在堆空间中创建，因此将创建总共 2 个字符串对象。
+
+```java
+//先检查字符串常量池中有没有"abcd"，如果字符串常量池中没有，则创建一个，然后 str1 指向字符串常量池中的对象，如果有，则直接将 str1 指向"abcd""；
+String str1 = "abcd"; 
+ //堆中创建一个新的对象
+String str2 = new String("abcd");  
+```
+参考TestConcat，TestIntern。
+
+只要使用 new 方法，便需要创建新的对象。使用双引号就会直接存在字符串常量池。
+
+## 基本类型包装类的常量池
+**Byte,Short,Integer,Long**,Character,Boolean
+
+前面 4 种包装类默认创建了**数值[-128，127]** 的相应类型的缓存数据，Character创建了数值在[0,127]范围的缓存数据，Boolean 直接返回True Or False。如果超出对应范围仍然会去创建新的对象。
+
+TestInteger
+```java
+public class TestInteger {
+    public static void main(String[] args) {
+        Integer i1 = 40;
+        Integer i2 = 40;
+        Integer i3 = 0;
+        Integer i4 = new Integer(40);
+        Integer i5 = new Integer(40);
+        Integer i6 = new Integer(0);
+
+        System.out.println("i1=i2   " + (i1 == i2));            //true
+        System.out.println("i1=i2+i3   " + (i1 == i2 + i3));    //true
+        System.out.println("i1=i4   " + (i1 == i4));            //false
+        System.out.println("i4=i5   " + (i4 == i5));            //false
+        System.out.println("i4=i5+i6   " + (i4 == i5 + i6));    //true
+        System.out.println("40=i5+i6   " + (40 == i5 + i6));    //true
+
+        /*语句 i4 == i5 + i6，因为+这个操作符不适用于 Integer 对象，首先 i5 和 i6 进行自动拆箱操作，进行数值相加，即 i4 == 40。
+        然后 Integer 对象无法与数值进行直接比较，所以 i4 自动拆箱转为 int 值 40，最终这条语句转为 40 == 40 进行数值比较。*/
+    }
+}
+```
+
+还有一个问题没找到答案，这些包装类型的常量池在哪？方法区吗？不懂
