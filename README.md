@@ -4,13 +4,13 @@ Some examples to help understanding JVM
 
 ## 1. JVM体系结构
 
-![JVM体系结构](koshunhopic.s3-cn-south-1.qiniucs.com/小书匠/2.png)
+![JVM体系结构](http://koshunhopic.s3-cn-south-1.qiniucs.com/小书匠/2.png)
  
  所谓JVM调优，基本上调的就是堆。（方法区是特殊的堆,JDK1.8之后在元空间里）
  
 ## 2.  类加载器ClassLoader
 #### 类的加载、连接、初始化
-![加载过程](koshunhopic.s3-cn-south-1.qiniucs.com/小书匠/加载过程.png)
+![加载过程](http://koshunhopic.s3-cn-south-1.qiniucs.com/小书匠/加载过程.png)
  - 加载：查找并加载类的二进制数据
  
  - 连接：验证、准备、解析
@@ -25,7 +25,7 @@ Some examples to help understanding JVM
 
 
 #### ClassLoader分类
-![ClassLoader分类](koshunhopic.s3-cn-south-1.qiniucs.com/小书匠/1.png)
+![ClassLoader分类](http://koshunhopic.s3-cn-south-1.qiniucs.com/小书匠/1.png)
 
 ##### 双亲委派机制（Parents Delegation Model）
 类加载器收到类加载的请求时，会将请求向上委托，直到启动类加载器（BootClassLoader），启动类加载器检查是否能加载这个类，能加载就结束。
