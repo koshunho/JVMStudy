@@ -1,3 +1,7 @@
+*.xml
+/out/
+*.class
+JVMStudy.iml
 # Default ignored files
 /shelf/
 /workspace.xml
