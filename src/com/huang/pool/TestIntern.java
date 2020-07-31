@@ -3,7 +3,7 @@ package com.huang.pool;
 public class TestIntern {
     public static void main(String[] args) {
         String s1 = new String("NMSL");
-        String s2 = s1.intern(); //String.intern() 是一个 Native 方法，它的作用是：如果运行时常量池中已经包含一个等于此 String 对象内容的字符串，则返回常量池中该字符串的引用；如果没有，JDK1.7之前（不包含1.7）的处理方式是在常量池中创建与此 String 内容相同的字符串，并返回常量池中创建的字符串的引用，JDK1.7以及之后的处理方式是在常量池中记录此字符串的引用，并返回该引用。
+        String s2 = s1.intern(); //String.intern() 是一个 Native 方法，它的作用是：使用intern方法的时候，会去常量池中判断是否存在这个字符串对象，如果不存在，就往常量池中存储一份，然后返回池中对应的对象。如果存在了，那么直接返回池中存在的字符串对象。
         String s3 = "NMSL";
 
         System.out.println(s2);        //NMSL
